@@ -1,0 +1,40 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <EditText
+        android:id="@+id/et_meeting_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Meeting Title"/>
+
+    <EditText
+        android:id="@+id/et_meeting_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Meeting Date (YYYY-MM-DD)"
+        android:inputType="date"/>
+
+    <EditText
+        android:id="@+id/et_meeting_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Meeting Time (HH:MM)"
+        android:inputType="time"/>
+
+    <Button
+        android:id="@+id/btn_add_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
+
+    <Button
+        android:id="@+id/btn_cancel_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"/>
+
+
+</LinearLayout>
