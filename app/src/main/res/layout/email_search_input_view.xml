@@ -1,0 +1,33 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Container for the email chips and the input -->
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- ChipGroup to display selected email chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/email_chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleLine="false"
+        app:chipSpacing="8dp" />
+
+    <!-- EditText for typing the email input -->
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter email"
+        android:inputType="textEmailAddress" />
+
+    <!-- RecyclerView for showing email suggestions -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/email_suggestions_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</LinearLayout>
+</merge>
