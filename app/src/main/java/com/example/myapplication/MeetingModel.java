@@ -19,6 +19,30 @@ public class MeetingModel {
         return meetingTitle;
     }
 
+    public void setMeetingTitle(String meetingTitle) {
+        this.meetingTitle = meetingTitle;
+    }
+
+    public void setMeetingDate(String meetingDate) {
+        this.meetingDate = meetingDate;
+    }
+
+    public void setMeetingTime(String meetingTime) {
+        this.meetingTime = meetingTime;
+    }
+
+    public void setMeetingCreator(String meetingCreator) {
+        this.meetingCreator = meetingCreator;
+    }
+
+    public void setMeetingUrl(String meetingUrl) {
+        this.meetingUrl = meetingUrl;
+    }
+
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
+    }
+
     public String getMeetingDate() {
         return meetingDate;
     }

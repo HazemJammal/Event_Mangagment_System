@@ -4,37 +4,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+
     <EditText
         android:id="@+id/et_meeting_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Meeting Title"/>
+        android:hint="Meeting Title"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/et_meeting_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Meeting Date (YYYY-MM-DD)"
-        android:inputType="date"/>
+        android:inputType="date"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/et_meeting_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Meeting Time (HH:MM)"
-        android:inputType="time"/>
+        android:inputType="time"
+        android:minHeight="48dp" />
 
-    <Button
-        android:id="@+id/btn_add_meeting"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/et_meeting_attendance"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add"/>
+        android:hint="Add People"
+        android:inputType="text"
+        android:minHeight="48dp" />
 
-    <Button
-        android:id="@+id/btn_cancel_meeting"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancel"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_add_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+
+        <Button
+            android:id="@+id/btn_cancel_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiAutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MultiAutoCompleteTextView" />
 
 
 </LinearLayout>

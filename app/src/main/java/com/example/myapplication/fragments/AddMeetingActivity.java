@@ -95,11 +95,14 @@ public class AddMeetingActivity extends AppCompatActivity {
                     meeting.put("date", model.getMeetingDate());
                     meeting.put("time", model.getMeetingTime());
                     meeting.put("userId", model.getMeetingCreator());
-                    meeting.put("meetingId", model.getMeetingId());
 
                     db.collection("meetings")
                             .add(meeting)
                             .addOnSuccessListener(documentReference -> {
+                                String meetingId = documentReference.getId();
+                                model.setMeetingId(meetingId);
+                                documentReference.update("meetingId",meetingId);
+
                                 Toast.makeText(AddMeetingActivity.this, "Meeting Added Successfully", Toast.LENGTH_SHORT).show();
                                 // Close the activity after saving
                                 finish();
