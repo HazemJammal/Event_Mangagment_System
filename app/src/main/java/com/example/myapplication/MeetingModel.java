@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import java.util.List;
+
 public class MeetingModel {
     private String meetingTitle;
     private String meetingDate;
@@ -7,12 +9,15 @@ public class MeetingModel {
     private String meetingCreator;
     private String meetingUrl;
     private String meetingId;
-    public MeetingModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingUrl) {
+    private List<String> meetingParticipants;
+
+    public MeetingModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingId, List<String> meetingParticipants) {
         this.meetingTitle = meetingTitle;
         this.meetingDate = meetingDate;
         this.meetingTime = meetingTime;
         this.meetingCreator = meetingCreator;
-        this.meetingUrl = meetingUrl;
+        this.meetingId = meetingId;
+        this.meetingParticipants = meetingParticipants;
     }
 
     public String getMeetingTitle() {

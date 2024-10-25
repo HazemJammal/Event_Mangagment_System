@@ -7,6 +7,11 @@
     tools:context=".fragments.HomeFragment">
 
     <!-- Other UI elements can go here -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
