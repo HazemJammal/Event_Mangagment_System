@@ -1,7 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -28,15 +28,27 @@
         android:inputType="time"
         android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/et_meeting_attendance"
+    <!-- ChipGroup for displaying selected emails as chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Add People"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:singleLine="false"
+        app:chipSpacing="8dp" />
 
+    <!-- MultiAutoCompleteTextView for entering emails -->
+    <MultiAutoCompleteTextView
+        android:id="@+id/et_meeting_participants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter participant emails"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:layout_marginBottom="16dp" />
 
+    <!-- Buttons for adding or canceling the meeting -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,14 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Cancel" />
-
     </LinearLayout>
-
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MultiAutoCompleteTextView" />
-
 
 </LinearLayout>
