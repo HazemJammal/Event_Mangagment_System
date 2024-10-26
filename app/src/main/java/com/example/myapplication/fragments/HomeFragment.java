@@ -79,28 +79,4 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private List<MeetingItemModel> getMeetings() {
-        return new ArrayList<>(Arrays.asList(
-                new MeetingItemModel("Project Kickoff", "2024-11-01", "10:00", "Alice", "1",
-                        Arrays.asList("bob@example.com", "carol@example.com")),
-                new MeetingItemModel("Design Review", "2024-11-01", "14:00", "Bob", "2",
-                        Arrays.asList("alice@example.com", "dave@example.com")),
-                new MeetingItemModel("Sprint Planning", "2024-11-02", "09:00", "Carol", "3",
-                        Arrays.asList("bob@example.com", "alice@example.com")),
-                new MeetingItemModel("Client Presentation", "2024-11-02", "11:00", "Dave", "4",
-                        Arrays.asList("carol@example.com", "alice@example.com")),
-                new MeetingItemModel("Team Retrospective", "2024-11-03", "15:00", "Alice", "5",
-                        Arrays.asList("bob@example.com", "dave@example.com")),
-                new MeetingItemModel("Code Review", "2024-11-03", "16:00", "Carol", "6",
-                        Arrays.asList("alice@example.com", "carol@example.com")),
-                new MeetingItemModel("Product Demo", "2024-11-04", "10:00", "Bob", "7",
-                        Arrays.asList("alice@example.com", "bob@example.com")),
-                new MeetingItemModel("Marketing Sync", "2024-11-05", "13:00", "Dave", "8",
-                        Arrays.asList("carol@example.com", "alice@example.com")),
-                new MeetingItemModel("Budget Review", "2024-11-05", "15:00", "Alice", "9",
-                        Arrays.asList("bob@example.com", "dave@example.com")),
-                new MeetingItemModel("Launch Plan", "2024-11-06", "09:00", "Carol", "10",
-                        Arrays.asList("dave@example.com", "bob@example.com"))
-        ));
-    }
 }

@@ -4,9 +4,6 @@
     <item android:title="Home"
         android:icon="@drawable/baseline_home_24"
         android:id="@+id/home"/>
-    <item android:title="Schedule"
-        android:icon="@drawable/baseline_schedule_24"
-        android:id="@+id/schedule"/>
     <item android:title="Chat"
         android:icon="@drawable/baseline_chat_24"
         android:id="@+id/chat"/>

@@ -9,9 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -72,7 +70,20 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             MeetingViewHolder meetingHolder = (MeetingViewHolder) holder;
             meetingHolder.meetingTitle.setText(meeting.getMeetingTitle());
             meetingHolder.meetingTime.setText(meeting.getMeetingTime());
-            meetingHolder.meetingCreator.setText(meeting.getMeetingCreator());
+            meetingHolder.meetingCreator.setText(meeting.getMeetingOwner());
+            // or however you want to display the creator's name
+
+            // Set the invited/creator status
+            if (meeting.isCreator()) {
+                meetingHolder.meetingType.setText("Creator");
+                meetingHolder.meetingType.setTextColor(context.getResources().getColor(R.color.green));
+                meetingHolder.sideBar.setBackgroundColor(context.getResources().getColor(R.color.green));
+                // Change color as needed
+            } else {
+                meetingHolder.meetingType.setText("Invited");
+                meetingHolder.meetingType.setTextColor(context.getResources().getColor(R.color.secondary_700)); // Change color as needed
+                meetingHolder.sideBar.setBackgroundColor(context.getResources().getColor(R.color.secondary_700)); // Change color as needed
+            }
         }
     }
 

@@ -1,60 +1,50 @@
 package com.example.myapplication;
 
-import java.util.List;
-
 public class MeetingItemModel {
-     String meetingTitle;
-     String meetingDate;
-     String meetingTime;
-     String meetingCreator;
-     String meetingId;
-     List<String> meetingParticipantsEmails;
+    private String meetingTitle;
+    private String meetingDate;
+    private String meetingTime;
+    private String meetingCreator; // Creator's ID or name
+    private boolean isCreator;
+    private String meetingOwner;
 
-    public MeetingItemModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingId, List<String> meetingParticipants) {
+    public String getMeetingOwner() {
+        return meetingOwner;
+    }
+
+    public void setMeetingOwner(String meetingOwner) {
+        this.meetingOwner = meetingOwner;
+    }
+// Indicates if the current user is the creator
+    // Add other fields as needed
+
+    // Constructor
+    public MeetingItemModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, boolean isCreator) {
         this.meetingTitle = meetingTitle;
         this.meetingDate = meetingDate;
         this.meetingTime = meetingTime;
         this.meetingCreator = meetingCreator;
-        this.meetingId = meetingId;
-        this.meetingParticipantsEmails = meetingParticipants;
+        this.isCreator = isCreator;
     }
-    public MeetingItemModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingId) {
-        this.meetingTitle = meetingTitle;
-        this.meetingDate = meetingDate;
-        this.meetingTime = meetingTime;
-        this.meetingCreator = meetingCreator;
-        this.meetingId = meetingId;
-    }
-    public MeetingItemModel(){}
+
+    // Getters
     public String getMeetingTitle() {
         return meetingTitle;
-    }
-
-    public void setMeetingTitle(String meetingTitle) {
-        this.meetingTitle = meetingTitle;
     }
 
     public String getMeetingDate() {
         return meetingDate;
     }
 
-    public void setMeetingDate(String meetingDate) {
-        this.meetingDate = meetingDate;
-    }
-
     public String getMeetingTime() {
         return meetingTime;
     }
 
-    public void setMeetingTime(String meetingTime) {
-        this.meetingTime = meetingTime;
+    public String getUserId() {
+        return meetingCreator; // or however you identify the creator
     }
 
-    public String getMeetingCreator() {
-        return meetingCreator;
-    }
-
-    public void setMeetingCreator(String meetingCreator) {
-        this.meetingCreator = meetingCreator;
+    public boolean isCreator() {
+        return isCreator;
     }
 }
