@@ -31,7 +31,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingBottom="10dp"
-            android:text="24:59"
             android:textSize="30sp" />
 
         <TextView
@@ -39,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Invited"
             android:textColor="@color/green"
             android:textSize="@dimen/big_text" />
     </LinearLayout>
@@ -52,24 +50,22 @@
 
         <TextView
             android:id="@+id/meeting_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingBottom="10dp"
-            android:text="Meeting with the niggas"
             android:textAlignment="viewStart"
             android:textSize="@dimen/big_text" />
 
         <TextView
             android:id="@+id/meeting_creator"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="hazem the big shit"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/baseline_supervisor_account_24"
+            android:drawablePadding="4dp"
             android:ellipsize="none"
             android:maxLines="1"
             android:padding="4dp"
-            android:textSize="16sp"
-            android:drawableStart="@drawable/baseline_supervisor_account_24"
-            android:drawablePadding="4dp"/>
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

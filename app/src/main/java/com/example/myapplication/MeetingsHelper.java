@@ -6,19 +6,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MeetingsHelper {
     private FirebaseFirestore database;
     private FirebaseAuth mAuth;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     public MeetingsHelper() {
         database = FirebaseFirestore.getInstance();
@@ -39,12 +44,26 @@ public class MeetingsHelper {
         Tasks.whenAllSuccess(creatorTask, participantTask)
                 .addOnCompleteListener(task -> {
                     List<MeetingItemModel> meetings = new ArrayList<>();
-                    processQueryResults(creatorTask, userId, meetings, listener);
-                    processQueryResults(participantTask, userId, meetings, listener);
+                    int[] pendingUsernameFetches = {0}; // Track pending username fetches
+
+                    processQueryResults(creatorTask, userId, meetings, listener, pendingUsernameFetches);
+                    processQueryResults(participantTask, userId, meetings, listener, pendingUsernameFetches);
+
+                    // Sort and notify listener after all processing is complete
+                    waitForUsernameFetchesAndNotify(listener, meetings, pendingUsernameFetches);
                 });
     }
 
-    private void processQueryResults(Task<QuerySnapshot> task, String userId, List<MeetingItemModel> meetings, OnMeetingsFetchedListener listener) {
+    private Date parseDateTime(MeetingItemModel meeting) {
+        try {
+            return dateFormat.parse(meeting.getMeetingDate() + " " + meeting.getMeetingTime());
+        } catch (ParseException e) {
+            Log.e("MeetingsHelper", "Error parsing date and time", e);
+            return new Date(); // Return current date if parsing fails
+        }
+    }
+
+    private void processQueryResults(Task<QuerySnapshot> task, String userId, List<MeetingItemModel> meetings, OnMeetingsFetchedListener listener, int[] pendingUsernameFetches) {
         if (task.isSuccessful()) {
             for (QueryDocumentSnapshot document : task.getResult()) {
                 MeetingItemModel meeting = new MeetingItemModel(
@@ -55,42 +74,31 @@ public class MeetingsHelper {
                         isCreator(userId, document.getString("userId"))
                 );
 
-                // Set meeting owner if the creator
                 if (meeting.isCreator()) {
                     meeting.setMeetingOwner("You");
-                } else {
-                    // Retrieve username asynchronously
-                    getUsername(document.getString("userId"), new OnUsernameFetchedListener() {
-                        @Override
-                        public void onUsernameFetched(String username) {
-                            if (username != null) {
-                                meeting.setMeetingOwner(username);
-                            } else {
-                                meeting.setMeetingOwner("Unknown");
-                            }
-                            // Add meeting after setting the owner
-                            if (!meetings.contains(meeting)) {
-                                meetings.add(meeting);
-                            }
-                            // Notify listener after all usernames are fetched
-                            listener.onMeetingsFetched(meetings);
-                        }
-                    });
-                    continue; // Skip adding meeting immediately
-                }
-
-                // Add meeting directly if the user is the creator
-                if (!meetings.contains(meeting)) {
                     meetings.add(meeting);
+                } else {
+                    pendingUsernameFetches[0]++;
+                    getUsername(document.getString("userId"), username -> {
+                        meeting.setMeetingOwner(username != null ? username : "Unknown");
+                        meetings.add(meeting);
+                        pendingUsernameFetches[0]--;
+
+                        // Check if all username fetches are complete
+                        waitForUsernameFetchesAndNotify(listener, meetings, pendingUsernameFetches);
+                    });
                 }
-            }
-            // Notify listener if all meetings were fetched without needing username
-            if (meetings.size() > 0) {
-                listener.onMeetingsFetched(meetings);
             }
         } else {
             Log.d("MeetingsHelper", "Error getting documents: ", task.getException());
-            listener.onMeetingsFetched(new ArrayList<>()); // Notify with an empty list on failure
+        }
+    }
+
+    private void waitForUsernameFetchesAndNotify(OnMeetingsFetchedListener listener, List<MeetingItemModel> meetings, int[] pendingUsernameFetches) {
+        if (pendingUsernameFetches[0] == 0) { // All username fetches complete
+            // Sort the meetings by date and time
+            Collections.sort(meetings, Comparator.comparing(this::parseDateTime));
+            listener.onMeetingsFetched(meetings);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.fragments;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -132,7 +133,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     private void setupButtons() {
         btnAddMeeting.setOnClickListener(v -> saveMeeting());
-        btnCancelMeeting.setOnClickListener(v -> finish());
+        btnCancelMeeting.setOnClickListener(v -> {
+            Intent intent = new Intent(AddMeetingActivity.this, HomeFragment.class);
+            startActivity(intent);
+        });
     }
 
     private void saveMeeting() {
@@ -162,7 +166,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                         model.setMeetingId(meetingId);
                         documentReference.update("meetingId", meetingId);
                         Toast.makeText(this, "Meeting Added Successfully", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(AddMeetingActivity.this, HomeFragment.class);
+                        startActivity(intent);
                     })
                     .addOnFailureListener(e ->
                             Toast.makeText(this, "Error saving meeting", Toast.LENGTH_SHORT).show());
