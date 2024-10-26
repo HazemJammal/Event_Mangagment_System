@@ -18,6 +18,14 @@ public class MeetingItemModel {
         this.meetingId = meetingId;
         this.meetingParticipantsEmails = meetingParticipants;
     }
+    public MeetingItemModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingId) {
+        this.meetingTitle = meetingTitle;
+        this.meetingDate = meetingDate;
+        this.meetingTime = meetingTime;
+        this.meetingCreator = meetingCreator;
+        this.meetingId = meetingId;
+    }
+    public MeetingItemModel(){}
     public String getMeetingTitle() {
         return meetingTitle;
     }

@@ -12,29 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.MeetingAdapter;
-import com.example.myapplication.MeetingDateAdapter;
 import com.example.myapplication.MeetingItemModel;
+import com.example.myapplication.MeetingsHelper;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -42,15 +33,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -67,39 +49,38 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        List<MeetingItemModel> meetings = new ArrayList<>();
 
+        MeetingsHelper meetingsHelper = new MeetingsHelper();
+        meetingsHelper.getMeetings(fetchedMeetings -> {
+            meetings.addAll(fetchedMeetings);
+            setupRecyclerView(view, meetings); // Set up RecyclerView here
+        });
 
-        List<MeetingItemModel> meetings = getMeetings();
-        List<String> meetingDates = getAllDates(meetings);
-
-
-
+        setupFloatingActionButton(view);
+        return view;
+    }
+    private void setupRecyclerView(View view, List<MeetingItemModel> meetings) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new MeetingAdapter(this.getContext(), meetings));
+    }
 
+    private void setupFloatingActionButton(View view) {
         FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start the AddMeetingActivity
-                Intent intent = new Intent(getActivity(), AddMeetingActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddMeetingActivity.class);
+            startActivity(intent);
         });
-
-        return view;
     }
 
     private List<MeetingItemModel> getMeetings() {
-        List<MeetingItemModel> meetings = new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Arrays.asList(
                 new MeetingItemModel("Project Kickoff", "2024-11-01", "10:00", "Alice", "1",
                         Arrays.asList("bob@example.com", "carol@example.com")),
                 new MeetingItemModel("Design Review", "2024-11-01", "14:00", "Bob", "2",
@@ -121,13 +102,5 @@ public class HomeFragment extends Fragment {
                 new MeetingItemModel("Launch Plan", "2024-11-06", "09:00", "Carol", "10",
                         Arrays.asList("dave@example.com", "bob@example.com"))
         ));
-        return meetings;
     }
-
-    private List<String> getAllDates(List<MeetingItemModel> meetings) {
-        return meetings.stream()
-                .map(MeetingItemModel::getMeetingDate)
-                .collect(Collectors.toList());
-    }
-
 }

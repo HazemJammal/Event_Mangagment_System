@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -12,7 +13,7 @@
 
         <View
             android:id="@+id/side_color"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/green" />
@@ -42,27 +43,27 @@
             android:textColor="@color/green"
             android:textSize="@dimen/big_text" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="20dp">
-    <TextView
-        android:id="@+id/meeting_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Meeting with the niggas"
-        android:textAlignment="viewStart"
-        android:textSize="@dimen/big_text"
-        android:paddingBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/meeting_creator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hazem"
-        android:drawableStart="@drawable/baseline_supervisor_account_24"
-        />
+
+        <TextView
+            android:id="@+id/meeting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Meeting with the niggas"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/big_text"
+            android:paddingBottom="10dp" />
+
+        <TextView
+            android:id="@+id/meeting_creator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/baseline_supervisor_account_24" />
     </LinearLayout>
 </LinearLayout>
