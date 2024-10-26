@@ -147,7 +147,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             String userId = mAuth.getCurrentUser().getUid();
 
-            MeetingModel model = new MeetingModel(title, date, time, userId, "test123");
+            MeetingModel model = new MeetingModel(title, date, time, userId);
             Map<String, Object> meeting = new HashMap<>();
             meeting.put("title", model.getMeetingTitle());
             meeting.put("date", model.getMeetingDate());

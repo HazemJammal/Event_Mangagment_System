@@ -16,33 +16,33 @@ public class MeetingsHelper {
     }
 
     public void getMeeting(MeetingsHelper.OnEmailsFetchedListener listener) {
-        database.collection("meetings")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        MeetingModel meeting;
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            List<String> participants = (List<String>) document.get("participants_emails");
-                            if (participants == null) {
-                                participants = new ArrayList<>();
-                            }
-                            meeting = new MeetingModel(
-                                    document.getString("meetingTitle"),
-                                    document.getString("meetingDate"),
-                                    document.getString("meetingTime"),
-                                    document.getString("meetingCreator"),
-                                    document.getString("meetingId"),
-                                    participants
-                            );
-
-
-                        }
-                        // Notify the listener that emails are fetched
-                        listener.onEmailsFetched(emails);
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
-                    }
-                });
+//        database.collection("meetings")
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        MeetingModel meeting;
+//                        for (QueryDocumentSnapshot document : task.getResult()) {
+//                            List<String> participants = (List<String>) document.get("participants_emails");
+//                            if (participants == null) {
+//                                participants = new ArrayList<>();
+//                            }
+//                            meeting = new MeetingModel(
+//                                    document.getString("meetingTitle"),
+//                                    document.getString("meetingDate"),
+//                                    document.getString("meetingTime"),
+//                                    document.getString("meetingCreator"),
+//                                    document.getString("meetingId"),
+//                                    participants
+//                            );
+//
+//
+//                        }
+//                        // Notify the listener that emails are fetched
+//                        listener.onEmailsFetched(emails);
+//                    } else {
+//                        Log.d(TAG, "Error getting documents: ", task.getException());
+//                    }
+//                });
     }
 
     public interface OnEmailsFetchedListener {

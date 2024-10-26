@@ -8,7 +8,7 @@ public class MeetingItemModel {
      String meetingTime;
      String meetingCreator;
      String meetingId;
-     List<String> meetingParticipants;
+     List<String> meetingParticipantsEmails;
 
     public MeetingItemModel(String meetingTitle, String meetingDate, String meetingTime, String meetingCreator, String meetingId, List<String> meetingParticipants) {
         this.meetingTitle = meetingTitle;
@@ -16,7 +16,7 @@ public class MeetingItemModel {
         this.meetingTime = meetingTime;
         this.meetingCreator = meetingCreator;
         this.meetingId = meetingId;
-        this.meetingParticipants = meetingParticipants;
+        this.meetingParticipantsEmails = meetingParticipants;
     }
     public String getMeetingTitle() {
         return meetingTitle;

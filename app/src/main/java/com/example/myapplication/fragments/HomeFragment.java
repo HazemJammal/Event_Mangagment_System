@@ -12,10 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.MeetingAdapter;
+import com.example.myapplication.MeetingDateAdapter;
+import com.example.myapplication.MeetingItemModel;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,13 +69,21 @@ public class HomeFragment extends Fragment {
         }
 
 
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        List<MeetingItemModel> meetings = getMeetings();
+        List<String> meetingDates = getAllDates(meetings);
+
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(new MeetingAdapter(this.getContext(), meetings));
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +96,38 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private List<MeetingItemModel> getMeetings() {
+        List<MeetingItemModel> meetings = new ArrayList<>(Arrays.asList(
+                new MeetingItemModel("Project Kickoff", "2024-11-01", "10:00", "Alice", "1",
+                        Arrays.asList("bob@example.com", "carol@example.com")),
+                new MeetingItemModel("Design Review", "2024-11-01", "14:00", "Bob", "2",
+                        Arrays.asList("alice@example.com", "dave@example.com")),
+                new MeetingItemModel("Sprint Planning", "2024-11-02", "09:00", "Carol", "3",
+                        Arrays.asList("bob@example.com", "alice@example.com")),
+                new MeetingItemModel("Client Presentation", "2024-11-02", "11:00", "Dave", "4",
+                        Arrays.asList("carol@example.com", "alice@example.com")),
+                new MeetingItemModel("Team Retrospective", "2024-11-03", "15:00", "Alice", "5",
+                        Arrays.asList("bob@example.com", "dave@example.com")),
+                new MeetingItemModel("Code Review", "2024-11-03", "16:00", "Carol", "6",
+                        Arrays.asList("alice@example.com", "carol@example.com")),
+                new MeetingItemModel("Product Demo", "2024-11-04", "10:00", "Bob", "7",
+                        Arrays.asList("alice@example.com", "bob@example.com")),
+                new MeetingItemModel("Marketing Sync", "2024-11-05", "13:00", "Dave", "8",
+                        Arrays.asList("carol@example.com", "alice@example.com")),
+                new MeetingItemModel("Budget Review", "2024-11-05", "15:00", "Alice", "9",
+                        Arrays.asList("bob@example.com", "dave@example.com")),
+                new MeetingItemModel("Launch Plan", "2024-11-06", "09:00", "Carol", "10",
+                        Arrays.asList("dave@example.com", "bob@example.com"))
+        ));
+        return meetings;
+    }
+
+    private List<String> getAllDates(List<MeetingItemModel> meetings) {
+        return meetings.stream()
+                .map(MeetingItemModel::getMeetingDate)
+                .collect(Collectors.toList());
     }
 
 }
