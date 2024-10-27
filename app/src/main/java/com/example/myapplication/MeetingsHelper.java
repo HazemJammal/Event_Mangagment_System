@@ -74,6 +74,8 @@ public class MeetingsHelper {
                         isCreator(userId, document.getString("userId"))
                 );
 
+                meeting.setParticipants_emails((List<String>) document.get("participants_emails"));
+
                 if (meeting.isCreator()) {
                     meeting.setMeetingOwner("You");
                     meetings.add(meeting);
@@ -134,7 +136,30 @@ public class MeetingsHelper {
                     }
                 });
     }
-
+    public void getUsernameEmail(String userEmail, OnUsernameFetchedListener listener) {
+        if (userEmail == null) {
+            listener.onUsernameFetched(null); // Return early if userId is null
+            return;
+        }
+        database.collection("users")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (userEmail.equals(document.getString("email"))) {
+                                listener.onUsernameFetched(document.getString("username"));
+                                return;
+                            }
+                        }
+                        // If no matching userId is found, return null
+                        listener.onUsernameFetched(null);
+                    } else {
+                        // Handle task failure case
+                        Log.e("FirestoreError", "Error fetching username: ", task.getException());
+                        listener.onUsernameFetched(null);
+                    }
+                });
+    }
     public interface OnUsernameFetchedListener {
         void onUsernameFetched(String username);
     }

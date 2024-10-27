@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private final Context context;
     private final List<Object> items;
+    private final OnMeetingClickListener onMeetingClickListener;
 
-    public MeetingAdapter(Context context, List<MeetingItemModel> meetings) {
+    // Interface for handling click events
+    public interface OnMeetingClickListener {
+        void onMeetingClick(MeetingItemModel meeting);
+    }
+
+    public MeetingAdapter(Context context, List<MeetingItemModel> meetings, OnMeetingClickListener listener) {
         this.context = context;
         this.items = organizeItems(meetings);
+        this.onMeetingClickListener = listener;
     }
 
     private List<Object> organizeItems(List<MeetingItemModel> meetings) {
@@ -71,19 +79,20 @@ public class MeetingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             meetingHolder.meetingTitle.setText(meeting.getMeetingTitle());
             meetingHolder.meetingTime.setText(meeting.getMeetingTime());
             meetingHolder.meetingCreator.setText(meeting.getMeetingOwner());
-            // or however you want to display the creator's name
 
             // Set the invited/creator status
             if (meeting.isCreator()) {
                 meetingHolder.meetingType.setText("Creator");
                 meetingHolder.meetingType.setTextColor(context.getResources().getColor(R.color.green));
                 meetingHolder.sideBar.setBackgroundColor(context.getResources().getColor(R.color.green));
-                // Change color as needed
             } else {
                 meetingHolder.meetingType.setText("Invited");
-                meetingHolder.meetingType.setTextColor(context.getResources().getColor(R.color.secondary_700)); // Change color as needed
-                meetingHolder.sideBar.setBackgroundColor(context.getResources().getColor(R.color.secondary_700)); // Change color as needed
+                meetingHolder.meetingType.setTextColor(context.getResources().getColor(R.color.secondary_700));
+                meetingHolder.sideBar.setBackgroundColor(context.getResources().getColor(R.color.secondary_700));
             }
+
+            // Set click listener for meeting items
+            meetingHolder.itemView.setOnClickListener(v -> onMeetingClickListener.onMeetingClick(meeting));
         }
     }
 

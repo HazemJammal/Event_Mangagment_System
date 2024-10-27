@@ -18,10 +18,9 @@ import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MeetingAdapter.OnMeetingClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,6 +55,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         List<MeetingItemModel> meetings = new ArrayList<>();
 
+        // Fetch meetings and set up the RecyclerView
         MeetingsHelper meetingsHelper = new MeetingsHelper();
         meetingsHelper.getMeetings(fetchedMeetings -> {
             meetings.addAll(fetchedMeetings);
@@ -65,10 +65,13 @@ public class HomeFragment extends Fragment {
         setupFloatingActionButton(view);
         return view;
     }
+
     private void setupRecyclerView(View view, List<MeetingItemModel> meetings) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(new MeetingAdapter(this.getContext(), meetings));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Pass 'this' as the listener to the adapter
+        MeetingAdapter adapter = new MeetingAdapter(getContext(), meetings, this);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setupFloatingActionButton(View view) {
@@ -79,4 +82,21 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onMeetingClick(MeetingItemModel meeting) {
+        Bundle bundle = new Bundle();
+        bundle.putString("meetingTitle", meeting.getMeetingTitle());
+        bundle.putString("meetingDate", meeting.getMeetingDate());
+        bundle.putString("meetingTime", meeting.getMeetingTime());
+        bundle.putString("meetingOwner", meeting.getMeetingOwner());
+        bundle.putStringArrayList("participants_emails", (ArrayList<String>) meeting.getParticipants_emails());
+
+        MeetingDetailsFragment meetingDetailsFragment = new MeetingDetailsFragment();
+        meetingDetailsFragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, meetingDetailsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }

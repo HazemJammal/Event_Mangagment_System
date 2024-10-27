@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import java.util.List;
+
 public class MeetingItemModel {
     private String meetingTitle;
     private String meetingDate;
@@ -7,6 +9,15 @@ public class MeetingItemModel {
     private String meetingCreator; // Creator's ID or name
     private boolean isCreator;
     private String meetingOwner;
+    private List<String> participants_emails;
+
+    public List<String> getParticipants_emails() {
+        return participants_emails;
+    }
+
+    public void setParticipants_emails(List<String> participants_emails) {
+        this.participants_emails = participants_emails;
+    }
 
     public String getMeetingOwner() {
         return meetingOwner;
