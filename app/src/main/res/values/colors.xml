@@ -28,6 +28,6 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="green">#76cb7e</color>
     <color name="gray_600">#FF757575</color>
-
+    <color name="cool_green">#d9fdd3</color>
     <color name="cool_text">#6B6A6A</color>
 </resources>

@@ -73,6 +73,7 @@ public class MeetingsHelper {
                         document.getString("userId"),
                         isCreator(userId, document.getString("userId"))
                 );
+                meeting.setMeetingId(document.getString("meetingId"));
 
                 meeting.setParticipants_emails((List<String>) document.get("participants_emails"));
 
@@ -160,7 +161,28 @@ public class MeetingsHelper {
                     }
                 });
     }
+
+    public void updateMeeting(MeetingItemModel meeting, OnMeetingUpdatedListener listener) {
+        database.collection("meetings")
+                .whereEqualTo("meetingId", meeting.getMeetingId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getReference().update("title", meeting.getMeetingTitle());
+                            document.getReference().update("date", meeting.getMeetingDate());
+                            document.getReference().update("time", meeting.getMeetingTime());
+                            listener.onMeetingUpdated(true);
+                            return;
+                        }
+                    }
+                    listener.onMeetingUpdated(false);
+                });
+    }
     public interface OnUsernameFetchedListener {
         void onUsernameFetched(String username);
+    }
+    public interface OnMeetingUpdatedListener {
+        void onMeetingUpdated(boolean success);
     }
 }

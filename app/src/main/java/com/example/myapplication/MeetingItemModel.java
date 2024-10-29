@@ -10,6 +10,15 @@ public class MeetingItemModel {
     private boolean isCreator;
     private String meetingOwner;
     private List<String> participants_emails;
+    private String meetingId;
+
+    public String getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
+    }
 
     public List<String> getParticipants_emails() {
         return participants_emails;
@@ -38,6 +47,10 @@ public class MeetingItemModel {
         this.isCreator = isCreator;
     }
 
+
+
+    public MeetingItemModel() {}
+
     // Getters
     public String getMeetingTitle() {
         return meetingTitle;
@@ -57,5 +70,17 @@ public class MeetingItemModel {
 
     public boolean isCreator() {
         return isCreator;
+    }
+
+    public void setMeetingTitle(String meetingTitle) {
+        this.meetingTitle = meetingTitle;
+    }
+
+    public void setMeetingDate(String meetingDate) {
+        this.meetingDate = meetingDate;
+    }
+
+    public void setMeetingTime(String meetingTime) {
+        this.meetingTime = meetingTime;
     }
 }

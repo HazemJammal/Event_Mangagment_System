@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment implements MeetingAdapter.OnMeetingCl
     public void onMeetingClick(MeetingItemModel meeting) {
         Bundle bundle = new Bundle();
         bundle.putString("meetingTitle", meeting.getMeetingTitle());
+        bundle.putString("meetingId", meeting.getMeetingId());
         bundle.putString("meetingDate", meeting.getMeetingDate());
         bundle.putString("meetingTime", meeting.getMeetingTime());
         bundle.putString("meetingOwner", meeting.getMeetingOwner());

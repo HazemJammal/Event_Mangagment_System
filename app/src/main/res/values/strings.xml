@@ -62,4 +62,11 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="join_group">Join Group</string>
+    <string name="add_group">Add Group</string>
+    <string name="submit">Submit</string>
+    <string name="enter_group_name">Group Name?</string>
+    <string name="enter_text_to_chat">Enter Text</string>
+    <string name="ok">Ok</string>
+    <string name="title_activity_firebase_test">FirebaseTest</string>
 </resources>
