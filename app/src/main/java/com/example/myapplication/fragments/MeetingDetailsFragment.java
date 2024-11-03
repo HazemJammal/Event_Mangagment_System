@@ -24,6 +24,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +58,7 @@ public class MeetingDetailsFragment extends Fragment {
 
         handleBackButton();
         handleEditButton();
+        handleDeleteButton();
     }
 
     private void handleEditButton() {
@@ -75,6 +77,10 @@ public class MeetingDetailsFragment extends Fragment {
 
     private void handleBackButton() {
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
+    }
+
+    private void handleDeleteButton(){
+        buttonDelete.setOnClickListener(v -> deleteMeeting());
     }
 
     private void populateMeetingDetails(Bundle bundle) {
@@ -209,5 +215,19 @@ public class MeetingDetailsFragment extends Fragment {
     private void setupDateAndTimePickers() {
         dateEditText.setOnClickListener(v -> showDatePickerDialog());
         timeEditText.setOnClickListener(v -> showTimePickerDialog());
+    }
+
+    private void deleteMeeting() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("meetings").document(meetingId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(requireContext(), "Meeting deleted successfully", Toast.LENGTH_SHORT).show();
+                    requireActivity().onBackPressed();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("MeetingDetailsFragment", "Error deleting meeting", e);
+                    Toast.makeText(requireContext(), "Error deleting meeting", Toast.LENGTH_SHORT).show();
+                });
     }
 }

@@ -18,11 +18,14 @@ import com.example.myapplication.ChatWithUserActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.User;
 import com.example.myapplication.UserAdapter;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +46,7 @@ public class ChatFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String currentUserId;
-    HashMap<String, String> userMap = new HashMap<>();
+    BiMap<String, String> userMap = HashBiMap.create();
 
     public ChatFragment() {
         // Required empty public constructor
@@ -92,7 +95,7 @@ public class ChatFragment extends Fragment {
 
         usernameSearch.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedUsername = adapter.getItem(position);
-            String selectedUserId = userMap.get(selectedUsername);
+            String selectedUserId = userMap.inverse().get(selectedUsername);
 
             Intent intent = new Intent(requireContext(), ChatWithUserActivity.class);
             intent.putExtra("USER_ID", selectedUserId);
@@ -150,7 +153,7 @@ public class ChatFragment extends Fragment {
                     }
                 }
 
-                listener.OnChatsFetchedListener(fetchedUserList);
+                listener.onchatsfetchedlistener(fetchedUserList);
             } else {
                 Log.w("ChatFragment", "Error getting documents.", task.getException());
             }
@@ -158,6 +161,6 @@ public class ChatFragment extends Fragment {
     }
 
     public interface OnChatsFetchedListener {
-        void OnChatsFetchedListener(List<User> userList);
+        void onchatsfetchedlistener(List<User> userList);
     }
 }
